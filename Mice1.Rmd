@@ -13,7 +13,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Description and Project responsibilities
 
-Austin and I will be writing code for data from BioSeb Dynamic Weight Bearing Pain Analysis. The data is for pain differences in different destabilization surgeries in mice. We will organize the data into groups and analyze the data using a t test and put the data into graphs.  
+We will be writing code for data from BioSeb Dynamic Weight Bearing Pain Analysis. The data is for pain differences in different destabilization surgeries in mice. We will organize the data into groups and analyze the data using a t test and put the data into graphs.  
+
+Austin's responsibilities include importing the data files, separating them into groups, and labeling the data with their date of aquisition. Jonah will be responsible for creating the code that will create the graphs and perform the t test. 
+
+### Resources 
+
+We obtained our data from the BioSeb Dynamic Weight Bearing Pain analysis. This data came from the Oklahoma Medical Research Foundation's study on osteoarthritis in mice. Austin was given access to this data at OMRF. The code for the graphs and the t test comes from the Rintro.rmd file provided in GNSC-3301. 
+
+### Progress thus far
+
+Up to this point, we have obtained the data that will be used from OMRF. We have also begun attempting to group the data and assign dates following the code outlined in the Rintro.rmd file. We have not completed this step successfully yet. Once that has been completed we will begin working on the graphs and t test.  
 
 
 
