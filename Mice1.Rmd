@@ -1,6 +1,6 @@
 ---
 title: "Mice1"
-author: "Jonah Mahen"
+author: "Jonah Mahen, Austin Lopez"
 date: "3/27/2025"
 output: html_document
 ---
@@ -31,6 +31,15 @@ Up to this point, we have obtained the data that will be used from OMRF. We have
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+Summary of Roles: 
+
+Austin:
+Completed: Exporting of data files, separation into subject, group, and date of acquisition. 
+Now, the data points will be combined and sorted using R.
+
+Jonah:
+Using R script, data points will be separated and combined into graphs showing data analysis. 
 
 ```{r cars}
 summary(cars)
