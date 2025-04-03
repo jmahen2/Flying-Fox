@@ -32,8 +32,12 @@ We obtained our data from the BioSeb Dynamic Weight Bearing Pain analysis. This 
 
 Up to this point, we have obtained the data that will be used from OMRF. Austin has exported the data and grouped the data into subject, date, and group. Austin still needs to sort the data points using R and then I will be creating graphs and analyzing the data using a t-test.
 
+# Load your dataset
+```{r} 
+my_data <- read.csv("ComputingMiceMain.csv")
+x <- my_data$Posture.Duration..s.
 
-
+```
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
