@@ -35,6 +35,24 @@ Up to this point, we have obtained the data that will be used from OMRF. Austin 
 # Load your dataset
 ```{r} 
 my_data <- read.csv("ComputingMiceMain.csv")
+Groups <- read.table(header=TRUE, text="
+Groups Samples
+1-FMRLb6DMM 87780
+1-FMRLb6DMM 107467
+2-Mb6VEHDMMPA 97478
+2-Mb6VEHDMMPA 97497
+2-Mb6VEHDMMPA 87786
+3-Mb6CPA 107455
+3-Mb6CPA 107463
+4-b6MRLDMMPA 97479
+4-b6MRLDMMPA 107442
+5-MRLVEHDMM 87782
+5-MRLVEHDMM 97502
+5-MRLVEHDMM 97494
+6-MRLCPA 117067
+6-MRLCPA 117068
+")
+data$Group <- Groups[data$Sample_group, "Groups"]
 ```
 
 # Histogram
@@ -55,3 +73,10 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+Mice <- aov(Rear.Left.Rear.Right.Area.Ratio~Sample_group, data= my_data)
+summary(Mice)
+```
+```
+{r} 
+data$Treatment[(data$Sample_group==107141)
