@@ -35,7 +35,7 @@ Up to this point, we have obtained the data that will be used from OMRF. Austin 
 # Load your dataset
 ```{r} 
 my_data <- read.csv("ComputingMiceMain.csv")
-Groups <- read.table(header=TRUE, text="
+Groups <- read.table(header=TRUE, row.names=2, text="
 Groups Samples
 1-FMRLb6DMM 87780
 1-FMRLb6DMM 107467
@@ -52,13 +52,17 @@ Groups Samples
 6-MRLCPA 117067
 6-MRLCPA 117068
 ")
-data$Group <- Groups[data$Sample_group, "Groups"]
+my_data$Group <- Groups[as.character(my_data$Sample_group), "Groups"]
 ```
 
 # Histogram
 ```{r}
 
 hist(my_data$Posture.Duration..s., breaks=50, col="skyblue", main="Distribution of Posture Duration", xlab="Posture Duration (sec)")
+
+## hist(subset(my_data, subset=(Group=="6-MRLCPA"))$Rear.Left.Rear.Right.Area.Ratio,breaks=20,col="skyblue", main="Distribution of Posture Duration", xlab="Posture Duration (sec)")
+
+for (graph in levels(as.factor(my_data$Group))) {hist(subset(my_data, subset=(Group==graph))$Rear.Left.Rear.Right.Area.Ratio,breaks=20,col="skyblue", main=graph, xlab="Posture Duration (sec)")}
 
 ```
 
@@ -74,9 +78,12 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 ```{r}
-Mice <- aov(Rear.Left.Rear.Right.Area.Ratio~Sample_group, data= my_data)
+Mice <- aov(Rear.Left.Rear.Right.Area.Ratio~Group, data= my_data)
 summary(Mice)
 ```
+
+```{r}
+BrokenMouse <- TukeyHSD(Mice)
+BrokenMouse
+plot(BrokenMouse)
 ```
-{r} 
-data$Treatment[(data$Sample_group==107141)
