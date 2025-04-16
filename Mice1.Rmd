@@ -1,39 +1,18 @@
 ---
 title: "Mice1"
 author: "Jonah Mahen, Austin Lopez"
-date: "3/27/2025"
+date: "4/16/2025"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Description and Roles
 
-## R Markdown
+We wrote code for data from the BioSeb Dynamic Weight Bearing Pain Analysis. The data is for pain differences in different destabilization surgeries in mice. Mice were grouped based upon the treatement they received for osteoarthritis. We organized the data from the Bioseb analysis into groups based upon their subgroup and determined if the data was significantly different overall and between groups. We also created histograms for each group to show the distribution of the data points. Austin performed the data cleanup, grouped the sample group numbers into a new column, and performed the anova. Jonah created the histograms for each group and also performed the t-test between groups. 
 
-### Description
+## Data Cleanup and Analysis
 
-We will be writing code for data from BioSeb Dynamic Weight Bearing Pain Analysis. The data is for pain differences in different destabilization surgeries in mice. We will organize the data into groups and analyze the data using a t test and put the data into graphs.  
-
-### Summary of Roles
-
-Austin:
-Completed: Exporting of data files, separation into subject, group, and date of acquisition. 
-Now, the data points will be combined and sorted using R.
-
-Jonah:
-Using R script, data points will be separated and combined into graphs showing data analysis. 
-
-### Resources 
-
-We obtained our data from the BioSeb Dynamic Weight Bearing Pain analysis. This data came from the Oklahoma Medical Research Foundation's study on osteoarthritis in mice. Austin was given access to this data at OMRF. The code for the graphs and the t test comes from the Rintro.rmd file provided in GNSC-3301. 
-
-### Progress thus far
-
-Up to this point, we have obtained the data that will be used from OMRF. Austin has exported the data and grouped the data into subject, date, and group. Austin still needs to sort the data points using R and then I will be creating graphs and analyzing the data using a t-test.
-
-# Load your dataset
 ```{r} 
+## This is where we set up the table and read the csv file that contains the data for Posture duration, the group, and posture ratio. We had to add another column in this data because many group numbers corresponded to another overall group. This problem would not let us perform a t-test unless were created the new column specifiying what each subgroup belonged to. The new column was named Groups. We used the as.character function because R was trying to run the sample groups using only numbers so we indicated that the subgroups were characters. 
 my_data <- read.csv("ComputingMiceMain.csv")
 Groups <- read.table(header=TRUE, row.names=2, text="
 Groups Samples
@@ -55,35 +34,32 @@ Groups Samples
 my_data$Group <- Groups[as.character(my_data$Sample_group), "Groups"]
 ```
 
-# Histogram
+
 ```{r}
+## Histograms were used to show the distribution of the data for both posture duration and Rear Left Rear Right Area Ratio for mice in different treatment groups. A for loup was utilized to run the code for each group. The groups were set as factors and then levels. Factors were used to indicate the data was to be pulled from each of the Groups in the Group column. Levels indicated the different groups within the column Group. 
 
 hist(my_data$Posture.Duration..s., breaks=50, col="skyblue", main="Distribution of Posture Duration", xlab="Posture Duration (sec)")
 
-## hist(subset(my_data, subset=(Group=="6-MRLCPA"))$Rear.Left.Rear.Right.Area.Ratio,breaks=20,col="skyblue", main="Distribution of Posture Duration", xlab="Posture Duration (sec)")
-
-for (graph in levels(as.factor(my_data$Group))) {hist(subset(my_data, subset=(Group==graph))$Rear.Left.Rear.Right.Area.Ratio,breaks=20,col="skyblue", main=graph, xlab="Posture Duration (sec)")}
+for (graph in levels(as.factor(my_data$Group))) {hist(subset(my_data, subset=(Group==graph))$Rear.Left.Rear.Right.Area.Ratio,breaks=20,col="skyblue", main=graph, xlab="Posture Ratio")}
 
 ```
 
-
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 ```{r}
+## An anova was performed to determine if there was a significant difference between the ratio of posture between legs and the treatment group. We were testing to see if the different ratios were due to random chance or if there was a significant difference. 
 Mice <- aov(Rear.Left.Rear.Right.Area.Ratio~Group, data= my_data)
 summary(Mice)
 ```
 
 ```{r}
+## This code runs a t-test between groups. Even though the data was not significantly different we wanted to determine the p values between each group. 
 BrokenMouse <- TukeyHSD(Mice)
 BrokenMouse
 plot(BrokenMouse)
 ```
+
+## Results
+According to the histograms the data was not normally distributed between treatment groups. However, the posture duration seemed to be normally distributed but was not gaussian. The analysis of variance indicated that there was not a significant difference between treatment groups. We then performed t-tests between each group but the only tests that gave a p value of less than 0.99 involved group 6. According to the histogram for group 6 there were several outliers which would explain the results. 
+
+## Resources 
+
+We obtained our data from the BioSeb Dynamic Weight Bearing Pain analysis. This data came from the Oklahoma Medical Research Foundation's study on osteoarthritis in mice. Austin was given access to this data at OMRF. The code for the graphs and the t test comes from the Rintro.rmd file provided in GNSC-3301.
